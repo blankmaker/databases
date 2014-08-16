@@ -4,7 +4,7 @@ USE chat;
 
 CREATE TABLE messages (
   `ID` int(100) NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
+  `text` varchar(255) DEFAULT NULL,
   `timestamp` varchar(50) DEFAULT NULL,
   `userID` varchar(100) DEFAULT NULL,
   `roomname` varchar(50) DEFAULT NULL,

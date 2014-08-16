@@ -40,6 +40,7 @@ describe("Persistent Node Chat Server", function() {
             function (err, response, json) {
               /* Now if we look in the database, we should find the
                * posted message there. */
+               console.log("message posted: ", json);
               var queryString = 'select * from users u, messages m where u.name = ? and u.ID = m.userID and m.roomname = ?';
               var queryArgs = [json.username, json.roomname];
               /* TODO: Change the above queryString & queryArgs to match your schema design
@@ -48,10 +49,9 @@ describe("Persistent Node Chat Server", function() {
                * them up to you. */
               dbConnection.query( queryString, queryArgs,
                 function(err, results) {
-                  console.log('test:############### ', results);
                   // Should have one result:
                   expect(results.length).to.equal(1);
-                  expect(results[0].content).to.equal("In mercys name, three days is all I need.");
+                  expect(results[0].text).to.equal("In mercys name, three days is all I need.");
                   /* TODO: You will need to change these tests if the
                    * column names in your schema are different from
                    * mine! */
@@ -63,7 +63,18 @@ describe("Persistent Node Chat Server", function() {
 
   it("Should output all messages from the DB", function(done) {
     // Let's insert a message into the db
-    var queryString = "";
+    // request({method: "POST",
+    //          uri: "http://127.0.0.1:3000/classes/messages",
+    //          json: {username: "Bob",
+    //                 message: "Men like you can never change!",
+    //                 roomname: "Hello"}
+    //         },
+    //         function(err, res, body) {
+    //           if (err) { throw err;}
+    //           console.log('body posted! here it is: ', body);
+    //         });
+    var queryString = "insert into messages (userID, text, roomname) " +
+                      "values (1, 'Men like you can never change!', 'main')";
     var queryArgs = [];
     /* TODO - The exact query string and query args to use
      * here depend on the schema you design, so I'll leave

@@ -22,6 +22,10 @@ dbConnection.connect();
 
 
 exports.findAllMessages = function(cb){
+  dbConnection.query('select * from messages', function(err, results) {
+    if (err) { throw err; }
+    cb(err, results);
+  });
 };
 
 exports.findUser = function(username, cb){
@@ -29,7 +33,9 @@ exports.findUser = function(username, cb){
       if(err) {
         throw err;
       }
-      cb(results);
+      // console.log("Find User results:", results);
+
+      cb(err, results);
   });
 
 };
@@ -47,7 +53,7 @@ exports.saveUser = function(username, cb){
 };
 
 exports.saveMessage = function(message, userid, roomname, cb){
-  dbConnection.query('insert into messages (content, userID, roomname) values ("' + message + '", "' + userid + '" , "' + roomname + '");', cb);
+  dbConnection.query('insert into messages (text, userID, roomname) values ("' + message + '", "' + userid + '" , "' + roomname + '");', cb);
 
 };
 

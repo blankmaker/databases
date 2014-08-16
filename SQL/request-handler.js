@@ -20,7 +20,6 @@ exports.postMessage = function(req, res) {
       };
 
       saveMessage(chat.message, chat.userid, chat.roomname, function () {
-        console.log('your cb worked dude');
         serverHelpers.sendResponse(res, message);
       });
   };
@@ -28,14 +27,17 @@ exports.postMessage = function(req, res) {
   parseData(req, function(_, msg) {
       message = msg;
       findUser(msg.username, function (err, results) {
-console.log("results: ",results);
+        if(err) {
+         throw err;
+        }
+        // console.log("here are the results: ", results);
         // no results/0 results
         if (!results || !results.length) {
           // create the user, then post the message
 //          console.log('you made it. move on to next step');
           saveUser(message.username, resultsCallback);
         } else {
-          // user exists, post the message to this user
+          // user exists, post the message to this user with userID
           resultsCallback(results);
         }
       });
