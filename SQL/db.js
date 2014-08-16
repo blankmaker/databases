@@ -23,6 +23,7 @@ dbConnection.connect();
 
 exports.findAllMessages = function(cb){
   dbConnection.query('select * from messages', function(err, results) {
+
     if (err) { throw err; }
     cb(err, results);
   });

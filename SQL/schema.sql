@@ -3,12 +3,12 @@ CREATE DATABASE chat;
 USE chat;
 
 CREATE TABLE messages (
-  `ID` int(100) NOT NULL AUTO_INCREMENT,
+  `objectId` int(100) NOT NULL AUTO_INCREMENT,
   `text` varchar(255) DEFAULT NULL,
   `timestamp` varchar(50) DEFAULT NULL,
   `userID` varchar(100) DEFAULT NULL,
   `roomname` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`objectId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* Create other tables and define schemas for them here! */
