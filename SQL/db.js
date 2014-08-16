@@ -7,8 +7,8 @@ var mysql = require('mysql');
  * database: "chat" specifies that we're using the database called
  * "chat", which we created by running schema.sql.*/
 var dbConnection = mysql.createConnection({
-  user: "",
-  password: "",
+  user: "root",
+  password: "superman",
   database: "chat"
 });
 
@@ -25,10 +25,32 @@ exports.findAllMessages = function(cb){
 };
 
 exports.findUser = function(username, cb){
+  dbConnection.query('select * from users where name="'+ username+'"', function(err, results) {
+      if(err) {
+        throw err;
+      }
+      cb(results);
+  });
+
 };
 
 exports.saveUser = function(username, cb){
+  console.log(username);
+  dbConnection.query('insert into users (name) values ("'+ username+'")');
+  dbConnection.query('select last_insert_id()', function(err, results) {
+    if(err) {
+      throw err;
+    }
+    results[0]['id'] = results[0]['last_insert_id()'];
+    cb(results);
+  });
 };
 
 exports.saveMessage = function(message, userid, roomname, cb){
+  dbConnection.query('insert into messages (content, userID, roomname) values ("' + message + '", "' + userid + '" , "' + roomname + '");', cb);
+
 };
+
+
+
+
